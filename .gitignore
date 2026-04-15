@@ -1,0 +1,19 @@
+# Gemini/AI junk
+.gemini/
+antigravity/
+AI_MEMO.md
+*.tmp
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project logs (optional to skip if you want them private, but usually they are checked in)
+# DEV_LOG.md
+# ARCHITECTURE.md
