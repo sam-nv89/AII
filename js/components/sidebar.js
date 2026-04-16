@@ -1,32 +1,36 @@
 /**
- * sidebar.js — Sidebar navigation component renderer.
+ * sidebar.js — Sidebar navigation component renderer. v2.0
+ * Removed all inline styles — using CSS classes exclusively.
  */
 
 window.renderSidebar = function() {
   const Store = window.Store;
   const info = Store.getLevelInfo();
   const xpPercent = info.progress;
+  const daysRemaining = Store.getDaysRemaining();
 
   const MODULE_META = [
-    { id: 1, icon: '🧠', title: 'Мышление Интегратора',   short: 'Основы AI & API' },
-    { id: 2, icon: '🔗', title: 'Первые связи в Make',     short: 'HTTP + Sheets → TG' },
-    { id: 3, icon: '🤖', title: 'Мозги для робота',        short: 'OpenAI & промпты' },
-    { id: 4, icon: '💾', title: 'AI-Агенты и Память',      short: 'RAG + файлы' },
-    { id: 5, icon: '💰', title: 'Бизнес и Продажи',        short: 'Клиенты и доход' },
+    { id: 1, icon: '🧠', title: 'Мышление Интегратора', short: 'Основы AI & API' },
+    { id: 2, icon: '🔗', title: 'Первые связи в Make',   short: 'HTTP + Sheets → TG' },
+    { id: 3, icon: '🤖', title: 'Мозги для робота',      short: 'OpenAI & промпты' },
+    { id: 4, icon: '💾', title: 'AI-Агенты и Память',    short: 'RAG + файлы' },
+    { id: 5, icon: '💰', title: 'Бизнес и Продажи',      short: 'Клиенты и доход' },
   ];
 
   const navItems = MODULE_META.map(m => {
     const unlocked  = Store.isModuleUnlocked(m.id);
     const completed = Store.isModuleCompleted(m.id);
-    const lockAttr  = unlocked ? '' : 'nav-item--locked';
+    const lockClass = unlocked ? '' : 'nav-item--locked';
     const badge     = completed ? '<span class="nav-item__badge">✓</span>' : '';
     const lockIcon  = unlocked ? '' : '<span class="nav-item__lock-icon">🔒</span>';
+    const clickAttr = unlocked ? `onclick="window.location.hash='#module-${m.id}'"` : '';
+    const titleAttr = unlocked ? m.title : 'Сначала пройди предыдущий модуль';
 
     return `
-      <div class="nav-item ${lockAttr}" 
-           data-nav="module-${m.id}" 
-           ${unlocked ? `onclick="window.location.hash='#module-${m.id}'"` : ''}
-           title="${unlocked ? m.title : 'Сначала пройди предыдущий модуль'}">
+      <div class="nav-item ${lockClass}"
+           data-nav="module-${m.id}"
+           ${clickAttr}
+           title="${titleAttr}">
         <div class="nav-item__icon">${m.icon}</div>
         <div class="nav-item__text">
           <div class="nav-item__title">${m.title}</div>
@@ -35,6 +39,10 @@ window.renderSidebar = function() {
         ${badge}${lockIcon}
       </div>`;
   }).join('');
+
+  const nextXpText = info.nextXP
+    ? `<div class="xp-bar__next">До следующего: ${info.nextXP - info.xp} XP</div>`
+    : '';
 
   return `
     <aside class="sidebar" id="sidebar">
@@ -54,7 +62,7 @@ window.renderSidebar = function() {
         <div class="xp-bar">
           <div class="xp-bar__fill" style="width:${xpPercent}%"></div>
         </div>
-        ${info.nextXP ? `<div style="font-size:0.7rem;color:var(--color-text-faint);margin-top:4px;text-align:right">До уровня: ${info.nextXP - info.xp} XP</div>` : ''}
+        ${nextXpText}
       </div>
 
       <nav class="sidebar-nav">
@@ -67,14 +75,14 @@ window.renderSidebar = function() {
           </div>
         </div>
 
-        <div class="sidebar-nav__label" style="margin-top:var(--space-4)">Модули курса</div>
+        <div class="sidebar-nav__label" style="margin-top:var(--space-3)">Модули курса</div>
         ${navItems}
       </nav>
 
-      <div style="padding:var(--space-4) var(--space-5);border-top:1px solid var(--color-border-light);margin-top:auto">
-        <div style="font-size:0.7rem;color:var(--color-text-faint);text-align:center;line-height:1.6">
+      <div class="sidebar-footer">
+        <div class="sidebar-footer__text">
           🚀 Make.com + OpenAI<br>
-          Путь к первому доходу
+          ${daysRemaining > 0 ? `${daysRemaining} дней до финиша` : '🏆 Курс завершён!'}
         </div>
       </div>
     </aside>`;

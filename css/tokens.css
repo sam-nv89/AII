@@ -1,91 +1,151 @@
-/* tokens.css — Design System Variables (Modernized v1.1) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap');
+/* tokens.css — Design System Variables v2.0 (Fully Complete) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
-  /* === COLOR PALETTE (Deep Intelligence) === */
-  --color-bg:           #050508;
-  --color-bg-elevated:  #0a0a0f;
-  --color-bg-card-hover:rgba(30, 30, 50, 0.6);
-  
-  --color-border:       rgba(124, 58, 237, 0.25);
-  --color-border-light: rgba(255, 255, 255, 0.08);
+  /* =========================================================
+     COLOR PALETTE — "Deep Intelligence" v2.0
+  ========================================================= */
 
-  /* Brand Colors (Stitch Modernization) */
-  --color-primary: #8b5cf6;
-  --color-primary-light: #d0bcff;
-  --color-primary-glow: rgba(139, 92, 246, 0.3);
-  
-  --color-secondary: #06b6d4;
-  --color-secondary-light: #4cd7f6;
-  --color-secondary-glow: rgba(6, 182, 212, 0.3);
+  /* Background Surface System (Digital Architect) */
+  --color-bg:                 #0d0d12;
+  --color-bg-elevated:        #12121a;
+  --color-bg-card:            #181823;
+  --color-bg-card-hover:      #1f1f2e;
+  --color-bg-recessed:        #0a0a10;
 
-  /* Surface System (The "Digital Architect" levels) */
-  --color-bg: #131313;                   /* Surface */
-  --color-bg-card: #201f1f;              /* Surface Container */
-  --color-bg-card-hover: #2a2a2a;        /* Surface Container High */
-  --color-bg-recessed: #0e0e0e;          /* Surface Container Lowest */
-  
-  /* Text */
-  --color-text: #e5e2e1;                 /* On Surface */
-  --color-text-muted: #cbc3d7;           /* On Surface Variant */
-  --color-text-faint: #958ea0;           /* Outline */
+  /* Brand — Primary (Violet) */
+  --color-primary:            #8b5cf6;
+  --color-primary-light:      #c4b5fd;
+  --color-primary-dark:       #6d28d9;
+  --color-primary-glow:       rgba(139, 92, 246, 0.35);
+  --color-primary-subtle:     rgba(139, 92, 246, 0.1);
 
-  /* Glassmorphism Specs */
-  --glass-bg: rgba(53, 53, 52, 0.4);      /* Surface Variant with opacity */
-  --glass-blur: blur(24px);
-  --glass-border: rgba(73, 68, 84, 0.15); /* Outline Variant at 15% */
-  --glass-shadow:       0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  /* Brand — Secondary (Cyan) */
+  --color-secondary:          #06b6d4;
+  --color-secondary-light:    #67e8f9;
+  --color-secondary-dark:     #0891b2;
+  --color-secondary-glow:     rgba(6, 182, 212, 0.3);
+  --color-secondary-subtle:   rgba(6, 182, 212, 0.08);
 
-  /* === GRADIENTS === */
-  --gradient-primary:   linear-gradient(135deg, #7c3aed, #06b6d4); /* Mixed tech gradient */
-  --gradient-secondary: linear-gradient(135deg, #06b6d4, #10b981);
-  --gradient-hero:      radial-gradient(circle at top left, #1a0a3e 0%, #050508 60%);
-  --gradient-card:      linear-gradient(165deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05));
+  /* Semantic — Success (Emerald) */
+  --color-success:            #10b981;
+  --color-success-light:      #6ee7b7;
+  --color-success-dark:       #059669;
+  --color-success-glow:       rgba(16, 185, 129, 0.3);
+  --color-success-subtle:     rgba(16, 185, 129, 0.08);
 
-  /* === TYPOGRAPHY === */
-  --font-family:        'Inter', system-ui, sans-serif;
-  --font-technical:     'Space Grotesk', monospace;
-  
-  --font-size-xs:       0.75rem;
-  --font-size-sm:       0.875rem;
-  --font-size-base:     1rem;
-  --font-size-lg:       1.125rem;
-  --font-size-xl:       1.25rem;
-  --font-size-2xl:      1.5rem;
-  --font-size-3xl:      2rem;
-  --font-size-4xl:      2.5rem;
-  --font-size-5xl:      3.5rem;
+  /* Semantic — Error (Red) */
+  --color-error:              #ef4444;
+  --color-error-light:        #fca5a5;
+  --color-error-dark:         #dc2626;
+  --color-error-glow:         rgba(239, 68, 68, 0.3);
+  --color-error-subtle:       rgba(239, 68, 68, 0.08);
 
-  /* === SPACING === */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
+  /* Semantic — Warning (Amber) */
+  --color-warning:            #f59e0b;
+  --color-warning-light:      #fcd34d;
+  --color-warning-glow:       rgba(245, 158, 11, 0.3);
+  --color-warning-subtle:     rgba(245, 158, 11, 0.08);
 
-  /* === RADIUS === */
-  --radius-sm:   8px;
-  --radius-md:   16px;
-  --radius-lg:   24px;
-  --radius-full: 9999px;
+  /* Text Hierarchy */
+  --color-text:               #e8e4f0;
+  --color-text-muted:         #a09ab8;
+  --color-text-faint:         #6b6480;
 
-  /* === SHADOWS === */
-  --shadow-lg:      0 20px 50px rgba(0,0,0,0.6);
-  --shadow-primary: 0 0 30px rgba(124,58,237,0.25);
-  --shadow-glow:    0 0 15px rgba(6, 182, 212, 0.3);
+  /* Borders */
+  --color-border:             rgba(139, 92, 246, 0.2);
+  --color-border-light:       rgba(255, 255, 255, 0.07);
+  --color-border-strong:      rgba(139, 92, 246, 0.4);
 
-  /* === TRANSITIONS === */
-  --transition-fast:   150ms ease;
-  --transition-base:   300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* =========================================================
+     GLASSMORPHISM SYSTEM
+  ========================================================= */
+  --glass-bg:                 rgba(24, 24, 35, 0.7);
+  --glass-bg-light:           rgba(31, 31, 46, 0.5);
+  --glass-blur:               blur(20px);
+  --glass-blur-heavy:         blur(40px);
+  --glass-border:             rgba(255, 255, 255, 0.08);
+  --glass-border-accent:      rgba(139, 92, 246, 0.2);
+  --glass-shadow:             0 8px 32px rgba(0, 0, 0, 0.6);
 
-  --z-overlay: 100;
-  --z-toast:   1000;
+  /* =========================================================
+     GRADIENTS
+  ========================================================= */
+  --gradient-primary:         linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  --gradient-primary-soft:    linear-gradient(135deg, rgba(124,58,237,0.8) 0%, rgba(6,182,212,0.8) 100%);
+  --gradient-secondary:       linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+  --gradient-success:         linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --gradient-hero:            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,237,0.25) 0%, transparent 60%),
+                              radial-gradient(ellipse 60% 40% at 90% 80%, rgba(6,182,212,0.12) 0%, transparent 60%);
+  --gradient-card:            linear-gradient(165deg, rgba(124,58,237,0.07) 0%, rgba(6,182,212,0.03) 100%);
+  --gradient-text:            linear-gradient(135deg, #fff 20%, var(--color-primary-light) 100%);
+
+  /* =========================================================
+     TYPOGRAPHY
+  ========================================================= */
+  --font-family:              'Inter', system-ui, sans-serif;
+  --font-technical:           'Space Grotesk', 'Inter', sans-serif;
+  --font-mono:                'SF Mono', 'Fira Code', 'Courier New', monospace;
+
+  --font-size-xs:             0.75rem;   /*  12px */
+  --font-size-sm:             0.875rem;  /*  14px */
+  --font-size-base:           1rem;      /*  16px */
+  --font-size-lg:             1.125rem;  /*  18px */
+  --font-size-xl:             1.25rem;   /*  20px */
+  --font-size-2xl:            1.5rem;    /*  24px */
+  --font-size-3xl:            2rem;      /*  32px */
+  --font-size-4xl:            2.5rem;    /*  40px */
+  --font-size-5xl:            3.5rem;    /*  56px */
+
+  /* =========================================================
+     SPACING (4px base unit)
+  ========================================================= */
+  --space-1:                  0.25rem;   /*   4px */
+  --space-2:                  0.5rem;    /*   8px */
+  --space-3:                  0.75rem;   /*  12px */
+  --space-4:                  1rem;      /*  16px */
+  --space-5:                  1.25rem;   /*  20px */
+  --space-6:                  1.5rem;    /*  24px */
+  --space-8:                  2rem;      /*  32px */
+  --space-10:                 2.5rem;    /*  40px */
+  --space-12:                 3rem;      /*  48px */
+  --space-16:                 4rem;      /*  64px */
+  --space-20:                 5rem;      /*  80px */
+
+  /* =========================================================
+     BORDER RADIUS
+  ========================================================= */
+  --radius-sm:                8px;
+  --radius-md:                12px;
+  --radius-lg:                16px;
+  --radius-xl:                20px;
+  --radius-2xl:               28px;
+  --radius-full:              9999px;
+
+  /* =========================================================
+     SHADOWS
+  ========================================================= */
+  --shadow-sm:                0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md:                0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg:                0 20px 48px rgba(0, 0, 0, 0.6);
+  --shadow-card:              0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-primary:           0 0 30px var(--color-primary-glow);
+  --shadow-glow:              0 0 20px var(--color-secondary-glow);
+
+  /* =========================================================
+     TRANSITIONS & ANIMATIONS
+  ========================================================= */
+  --transition-fast:          150ms ease;
+  --transition-base:          280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:          450ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring:        500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-bounce:        600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* =========================================================
+     Z-INDEX SCALE
+  ========================================================= */
+  --z-base:                   1;
+  --z-overlay:                100;
+  --z-modal:                  200;
+  --z-toast:                  1000;
 }
-

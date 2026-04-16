@@ -1,3 +1,55 @@
+# DEV LOG — AI-Интегратор 2026
+
+---
+
+## [2026-04-16] — Тотальный Аудит и Апгрейд (v2.0.0)
+
+**Автор:** Antigravity AI Architect  
+**Задача:** Полный аудит кодовой базы с нуля + рефакторинг и визуальное совершенствование.
+
+### 🔴 Исправлено (Critical Bug Fixes):
+- **9 недостающих CSS-токенов**: `--color-success`, `--color-error`, `--color-warning`, `--gradient-success`, `--shadow-sm`, `--shadow-card`, `--z-modal`, `--radius-xl`, `--radius-2xl` — все добавлены в `tokens.css`.
+- **Дубликаты в `components.css`**: удалены повторяющиеся блоки `.sidebar-logo` (~30 строк) и `.quiz-result` (конфликтующие определения).
+- **Баг `--color-surface-base`**: несуществующий токен в `layout.css:89` заменён на `var(--glass-bg)`.
+- **Утечка памяти таймера квиза**: `window._quizTimer` (глобальная переменная) заменён на `_timerInterval` в замыкании с правильным `cleanupQuiz()`.
+- **Sidebar inline-стили**: footer блок переведён на CSS-класс `.sidebar-footer`.
+
+### 🟡 Визуальные апгрейды:
+- **Animated Ambient Orbs**: `body::before` / `::after` — живой фиолетово-циановый фон с анимацией float.
+- **Shimmer Loading Screen**: HTML-компонент с анимированными точками вместо plain text.
+- **Animated Counters**: hero-статистика на главной считается от 0 до N с easeOut (~1.2s).
+- **Animated Score Ring**: кольцо результата квиза анимировано (canvas, easeOutExpo, glow-эффект).
+- **Keyboard Navigation в квизе**: клавиши `1-5` → выбор варианта, `Enter/Space` → следующий, `Backspace` → назад.
+- **Key Hints**: серые подсказки `[1]...[5]` появляются при наведении на вопрос.
+- **Per-module Hover Glow**: каждая карточка модуля светится своим цветом при ховере.
+- **Directional Page Transitions**: slide-left / slide-right в зависимости от направления навигации.
+- **Responsive Topbar**: `topbar__days` скрывается на мобильных (≤768px).
+
+### ⚡ Архитектурные улучшения:
+- **Store Memoization**: `_cache` объект с инвалидацией в `save()` — `getLevelInfo()` больше не читает localStorage при каждом рендере.
+- **Store.invalidate()**: вызывается перед обновлением XP bar для синхронности после сохранения результата квиза.
+- **Централизованный Route Guard**: дедублировано условие `isModuleUnlocked` в `navigate()`.
+- **Quiz Cleanup**: `cleanupQuiz()` снимает и таймер и keyboard listener при навигации.
+
+### 📁 Затронуто файлов:
+`css/tokens.css`, `css/components.css`, `css/layout.css`, `js/store.js`, `js/app.js`, `js/views/quiz.js`, `js/views/home.js`, `js/views/module.js`, `js/components/sidebar.js`, `js/components/navbar.js`, `index.html`
+
+### ✅ Верификация:
+Проверено в браузере: 0 ошибок в консоли, все 3 вью (home, module, quiz) рендерятся корректно, keyboard shortcuts работают, таймер запускается и останавливается.
+
+---
+
+## [2026-04-16] — Загрузка обновлений и запуск сервера (v1.4.3)
+
+**Задача:** Синхронизация локальной копии с GitHub и проверка работоспособности на виртуальном сервере.
+
+### Выполнено:
+- **Git Sync**: Получены последние изменения v1.4.3 (772 инкремента).
+- **Server Deployment**: Запущен `npx serve` на порту 3000.
+- **Verification**: Проверка через Chrome подтвердила корректную отрисовку SPA и работу системы прогресса.
+
+---
+
 ## [2026-04-16] — Синхронизация с GitHub (v1.4.3)
 - **Синхронизация**: Все последние изменения (v1.2.0 - v1.4.3) успешно отправлены в основной репозиторий `main`.
 - **Чистка проекта**: В `.gitignore` добавлен каталог `.agents/` для поддержания чистоты репозитория.
