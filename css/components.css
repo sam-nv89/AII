@@ -1198,7 +1198,7 @@
   position: relative;
   width: 160px;
   height: 160px;
-  margin: 0 auto var(--space-8);
+  margin: 0 auto var(--space-12); /* Увеличен отступ до 48px */
 }
 
 .quiz-result__score-num {
@@ -1214,7 +1214,7 @@
 
 .quiz-result__score-label {
   position: absolute;
-  bottom: -6px;
+  bottom: -24px; /* Опущено значительно ниже (было -6px) */
   left: 0;
   right: 0;
   font-size: var(--font-size-xs);
@@ -1227,6 +1227,7 @@
   font-family: var(--font-technical);
   font-size: var(--font-size-2xl);
   font-weight: 800;
+  margin-top: var(--space-4); /* Добавлен отступ сверху на всякий случай */
   margin-bottom: var(--space-4);
   letter-spacing: -0.02em;
 }

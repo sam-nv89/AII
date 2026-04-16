@@ -9,6 +9,8 @@
 
 ### 🔴 Исправлено (Critical Bug Fixes):
 - **9 недостающих CSS-токенов**: `--color-success`, `--color-error`, `--color-warning`, `--gradient-success`, `--shadow-sm`, `--shadow-card`, `--z-modal`, `--radius-xl`, `--radius-2xl` — все добавлены в `tokens.css`.
+- **Topbar**: Исправлена ошибка обновления заголовка при переходе между страницами.
+- **Quiz Result Overlap**: Исправлено наложение кольца результата на текст — увеличены отступы (`margin-bottom: 48px`) и скорректировано позиционирование подписи верных ответов.
 - **Дубликаты в `components.css`**: удалены повторяющиеся блоки `.sidebar-logo` (~30 строк) и `.quiz-result` (конфликтующие определения).
 - **Баг `--color-surface-base`**: несуществующий токен в `layout.css:89` заменён на `var(--glass-bg)`.
 - **Утечка памяти таймера квиза**: `window._quizTimer` (глобальная переменная) заменён на `_timerInterval` в замыкании с правильным `cleanupQuiz()`.
@@ -25,11 +27,12 @@
 - **Directional Page Transitions**: slide-left / slide-right в зависимости от направления навигации.
 - **Responsive Topbar**: `topbar__days` скрывается на мобильных (≤768px).
 
-### ⚡ Архитектурные улучшения:
-- **Store Memoization**: `_cache` объект с инвалидацией в `save()` — `getLevelInfo()` больше не читает localStorage при каждом рендере.
-- **Store.invalidate()**: вызывается перед обновлением XP bar для синхронности после сохранения результата квиза.
-- **Централизованный Route Guard**: дедублировано условие `isModuleUnlocked` в `navigate()`.
-- **Quiz Cleanup**: `cleanupQuiz()` снимает и таймер и keyboard listener при навигации.
+### ⚡ Архитектурные улучшения и Документация:
+- **Store Memoization**: `_cache` объект с мемоизацией и авто-инвалидацией.
+- **Обновлена ARCHITECTURE.md**: отражена новая логика (v2.0.0).
+- **Обновлена README.md**: актуализированы фичи и стек.
+- **Создана ROADMAP.md**: зафиксированы текущие и будущие цели проекта.
+- **GitHub Sync**: проект залит в основной репозиторий (main).
 
 ### 📁 Затронуто файлов:
 `css/tokens.css`, `css/components.css`, `css/layout.css`, `js/store.js`, `js/app.js`, `js/views/quiz.js`, `js/views/home.js`, `js/views/module.js`, `js/components/sidebar.js`, `js/components/navbar.js`, `index.html`
