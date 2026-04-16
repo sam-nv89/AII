@@ -154,6 +154,134 @@
 
     if (passed) window.launchConfetti();
 
+    // Generate Error Review HTML if any errors exist
+    const errors = [];
+    userAnswers.forEach((ans, idx) => {
+      const q = currentQuizData.quiz[idx];
+      if (ans !== q.correct) {
+        errors.push({
+          idx: idx + 1,
+          question: q.question,
+          options: q.options,
+          userAnswerIdx: ans,
+          correctAnswerIdx: q.correct,
+          context: q.context
+        });
+      }
+    });
+
+    let reviewHtml = '';
+    if (errors.length > 0) {
+      reviewHtml = `
+        <div class="quiz-review">
+          <div class="quiz-review__header">
+            <h3 class="quiz-review__title">Разбор ошибок</h3>
+            <p class="quiz-review__subtitle">Изучайте вопросы по одному для лучшего понимания</p>
+          </div>
+          
+          <div class="review-slider-window">
+            <div class="review-slider-track" id="review-track">
+              ${errors.map(err => `
+                <div class="review-card">
+                  <div class="review-card__header">
+                    <span class="review-card__num">Вопрос ${err.idx}</span>
+                    <div class="review-card__question">${err.question}</div>
+                  </div>
+
+                  ${err.context ? `<div class="quiz-question__context">${err.context}</div>` : ''}
+
+                  <div class="quiz-options">
+                    ${err.options.map((opt, oIdx) => {
+                      let statusClass = '';
+                      let statusIcon = '';
+                      let statusLabel = '';
+                      
+                      if (oIdx === err.correctAnswerIdx) {
+                        statusClass = 'is-correct';
+                        statusIcon = '✅';
+                        statusLabel = 'Правильный ответ';
+                      } else if (oIdx === err.userAnswerIdx) {
+                        statusClass = 'is-wrong';
+                        statusIcon = '❌';
+                        statusLabel = 'Ваш выбор';
+                      }
+
+                      return `
+                        <div class="quiz-option is-disabled ${statusClass}" style="--delay: ${oIdx * 100}ms">
+                          <div class="quiz-option__letter">${String.fromCharCode(65 + oIdx)}</div>
+                          <div style="flex:1;">
+                             <div style="font-weight: 500;">${opt}</div>
+                             ${statusLabel ? `<div class="review-card__status-msg ${statusClass === 'is-correct' ? 'review-card__status-msg--correct' : 'review-card__status-msg--wrong'}">${statusIcon} ${statusLabel}</div>` : ''}
+                          </div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="review-controls">
+            <button class="review-nav-btn" id="review-prev" onclick="window.switchReviewSlide(-1)" disabled title="Назад">←</button>
+            <div class="review-progress"><span id="review-current">1</span> / ${errors.length}</div>
+            <button class="review-nav-btn" id="review-next" onclick="window.switchReviewSlide(1)" ${errors.length <= 1 ? 'disabled' : ''} title="Далее">→</button>
+          </div>
+        </div>
+      `;
+
+      // Define global slider controller
+      window.__reviewState = {
+        current: 0,
+        total: errors.length
+      };
+
+      window.switchReviewSlide = (dir) => {
+        const state = window.__reviewState;
+        const newIdx = state.current + dir;
+        
+        if (newIdx < 0 || newIdx >= state.total) return;
+        
+        state.current = newIdx;
+        const track = document.getElementById('review-track');
+        const nextBtn = document.getElementById('review-next');
+        const prevBtn = document.getElementById('review-prev');
+        const currentCounter = document.getElementById('review-current');
+
+        const updateHeight = () => {
+          const windowEl = document.querySelector('.review-slider-window');
+          const currentCard = track?.querySelectorAll('.review-card')[newIdx];
+          if (windowEl && currentCard) {
+            windowEl.style.height = currentCard.offsetHeight + 'px';
+          }
+        };
+
+        if (track) {
+          track.style.transform = `translateX(-${newIdx * 100}%)`;
+          updateHeight();
+          
+          // Trigger stagger animation again for the new card options
+          const currentCard = track.querySelectorAll('.review-card')[newIdx];
+          if (currentCard) {
+            currentCard.style.animation = 'none';
+            void currentCard.offsetWidth; // trigger reflow
+            currentCard.style.animation = 'fadeInScale 0.5s ease-out both';
+            
+            const opts = currentCard.querySelectorAll('.quiz-option');
+            opts.forEach(o => {
+              o.style.animation = 'none';
+              void o.offsetWidth;
+              o.style.animation = 'slideInUp 0.4s ease-out forwards';
+            });
+          }
+        }
+        
+        if (currentCounter) currentCounter.textContent = newIdx + 1;
+        if (prevBtn) prevBtn.disabled = (newIdx === 0);
+        if (nextBtn) nextBtn.disabled = (newIdx === state.total - 1);
+      };
+    }
+
     container.innerHTML = `
       <div class="quiz-result">
         <div class="quiz-result__score-ring">
@@ -179,10 +307,24 @@
             : `<button class="btn btn--primary" onclick="window.location.hash='#quiz-${currentQuizData.id}'">Попробовать снова</button>`
           }
         </div>
+
+        ${reviewHtml}
       </div>
     `;
 
     drawScoreRing(score, passed);
+
+    // Initial height sync for review slider
+    if (errors.length > 0) {
+      setTimeout(() => {
+        const track = document.getElementById('review-track');
+        const windowEl = document.querySelector('.review-slider-window');
+        if (track && windowEl) {
+          const firstCard = track.querySelector('.review-card');
+          if (firstCard) windowEl.style.height = firstCard.offsetHeight + 'px';
+        }
+      }, 100);
+    }
   }
 
   function drawScoreRing(score, passed) {
@@ -208,4 +350,4 @@
     ctx.strokeStyle = passed ? '#10b981' : '#ef4444';
     ctx.stroke();
   }
-})();
+})(window);

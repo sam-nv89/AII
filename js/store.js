@@ -40,7 +40,7 @@ window.Store = {
 
   /** Days elapsed since the user started the course */
   getDaysElapsed() {
-    const state = load();
+    const state = this.load();
     const elapsed = Math.floor((Date.now() - state.startDate) / (1000 * 60 * 60 * 24));
     return Math.max(0, elapsed);
   },
@@ -53,18 +53,18 @@ window.Store = {
   /** Check if a module is accessible */
   isModuleUnlocked(moduleId) {
     if (moduleId === 1) return true; // First module always open
-    const state = load();
+    const state = this.load();
     return state.completedModules.includes(moduleId - 1);
   },
 
   /** Check if a module is fully completed */
   isModuleCompleted(moduleId) {
-    return load().completedModules.includes(moduleId);
+    return this.load().completedModules.includes(moduleId);
   },
 
   /** Save quiz score and unlock next module if passed (≥70%) */
   saveQuizScore(moduleId, score) {
-    const state = load();
+    const state = this.load();
     state.quizScores[moduleId] = score;
     state.lastVisited = Date.now();
 
@@ -74,35 +74,35 @@ window.Store = {
       state.xp += 500 + Math.round((score - 70) * 10);
     }
 
-    save(state);
+    this.save(state);
     return state;
   },
 
   /** Award arbitrary XP (for reading sections, etc.) */
   awardXP(amount) {
-    const state = load();
+    const state = this.load();
     state.xp += amount;
-    save(state);
+    this.save(state);
     return state.xp;
   },
 
   /** Set current module being viewed */
   setCurrentModule(moduleId) {
-    const state = load();
+    const state = this.load();
     state.currentModule = moduleId;
     state.lastVisited = Date.now();
-    save(state);
+    this.save(state);
   },
 
   /** Overall progress percentage (0-100) */
   getProgressPercent() {
-    const state = load();
+    const state = this.load();
     return Math.round((state.completedModules.length / 5) * 100);
   },
 
   /** XP level info */
   getLevelInfo() {
-    const state = load();
+    const state = this.load();
     const levels = [
       { name: 'Новичок',      xpNeeded: 0    },
       { name: 'Ученик',       xpNeeded: 500  },

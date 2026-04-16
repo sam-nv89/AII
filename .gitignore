@@ -2,6 +2,7 @@
 .gemini/
 antigravity/
 AI_MEMO.md
+.agents/
 *.tmp
 
 # IDEs

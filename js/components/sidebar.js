@@ -20,7 +20,7 @@ window.renderSidebar = function() {
     const completed = Store.isModuleCompleted(m.id);
     const lockAttr  = unlocked ? '' : 'nav-item--locked';
     const badge     = completed ? '<span class="nav-item__badge">✓</span>' : '';
-    const lockIcon  = unlocked ? '' : '<span class="nav-item__lock-icon" style="margin-left:auto;opacity:.5;font-size:12px;">🔒</span>';
+    const lockIcon  = unlocked ? '' : '<span class="nav-item__lock-icon">🔒</span>';
 
     return `
       <div class="nav-item ${lockAttr}" 
@@ -29,8 +29,8 @@ window.renderSidebar = function() {
            title="${unlocked ? m.title : 'Сначала пройди предыдущий модуль'}">
         <div class="nav-item__icon">${m.icon}</div>
         <div class="nav-item__text">
-          <div style="font-size:0.8rem;font-weight:600;color:inherit;line-height:1.2">${m.title}</div>
-          <div style="font-size:0.7rem;color:var(--color-text-faint);margin-top:2px">${m.short}</div>
+          <div class="nav-item__title">${m.title}</div>
+          <div class="nav-item__subtitle">${m.short}</div>
         </div>
         ${badge}${lockIcon}
       </div>`;
@@ -62,8 +62,8 @@ window.renderSidebar = function() {
         <div class="nav-item" data-nav="home" onclick="window.location.hash='#home'">
           <div class="nav-item__icon">🏠</div>
           <div class="nav-item__text">
-            <div style="font-size:0.8rem;font-weight:600;line-height:1.2">Главная</div>
-            <div style="font-size:0.7rem;color:var(--color-text-faint);margin-top:2px">Дашборд прогресса</div>
+            <div class="nav-item__title">Главная</div>
+            <div class="nav-item__subtitle">Дашборд прогресса</div>
           </div>
         </div>
 
