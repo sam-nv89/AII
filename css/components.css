@@ -774,8 +774,6 @@
   top: -18px;
   left: var(--space-5);
   font-size: 22px;
-  background: var(--color-bg-card);
-  padding: 0 var(--space-2);
   z-index: 1;
 }
 
